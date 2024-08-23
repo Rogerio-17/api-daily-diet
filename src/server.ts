@@ -1,23 +1,8 @@
 import { app } from "./app";
-import { knex } from "./database";
 import { env } from "./env";
+import { users } from "./routes/users";
 
-app.post("/", async () => {
-  const user = await knex("user")
-    .insert({
-      id: crypto.randomUUID(),
-      name: "Rogerio José",
-    })
-    .returning("*");
-
-  return user;
-});
-
-app.get("/", async () => {
-  const user = await knex("user").select("*");
-
-  return user;
-});
+app.register(users);
 
 app
   .listen({
